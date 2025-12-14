@@ -52,7 +52,6 @@
             margin-bottom: 30px;
         }
 
-        /* Area Upload dengan Drag & Drop */
         .upload-area {
             border: 2px dashed #cbd5e1;
             padding: 30px 20px;
@@ -91,7 +90,6 @@
             cursor: pointer;
         }
 
-        /* Preview Gambar */
         .preview-container {
             display: none;
             margin-top: 20px;
@@ -221,7 +219,7 @@
 <body>
 
     <div class="container">
-        <h1>Deteksi Motif Batik</h1>
+        <h1>🔬Deteksi Motif Batik🔬</h1>
         <p>Upload foto gambar batik untuk mengidentifikasi motifnya menggunakan AI.</p>
 
         <div class="upload-area" id="dropZone">
@@ -303,9 +301,9 @@
 
         function handleFile(file) {
             if (file) {
-                // Validasi tipe file gambar
+
                 if (!file.type.startsWith('image/')) {
-                    showError("Mohon unggah file gambar (JPG/PNG).");
+                    showError("Upload file gambar (JPG/PNG).");
                     return;
                 }
 
@@ -313,17 +311,14 @@
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     previewContainer.style.display = 'block';
-                    uploadArea.style.display = 'none'; // Sembunyikan area upload
-                    btnPredict.disabled = false; // Aktifkan tombol
-                    
-                    // Reset UI hasil
+                    uploadArea.style.display = 'none';
+                    btnPredict.disabled = false;
+
                     resultCard.style.display = 'none';
                     errorMessage.style.display = 'none';
                 }
                 reader.readAsDataURL(file);
-                
-                // Set file ke input (penting untuk drag & drop)
-                // Note: fileInput.files adalah read-only, kita gunakan FormData nanti
+
                 fileInput.files_dropped = file; 
             }
         }
@@ -346,15 +341,14 @@
         }
 
         async function predict() {
-            // Ambil file dari input atau dari drop event
+
             const file = fileInput.files[0] || fileInput.files_dropped;
 
             if (!file) {
-                showError("Silakan pilih gambar terlebih dahulu!");
+                showError("Gambar harus dipilih terlebih dahulu!");
                 return;
             }
 
-            // UI Loading State
             const originalBtnText = btnPredict.innerText;
             btnPredict.disabled = true;
             btnPredict.innerHTML = '<div class="loader"></div> Memproses...';
@@ -365,7 +359,7 @@
             formData.append("file", file);
 
             try {
-                // Gunakan URL API yang sudah dikonfigurasi
+
                 if (!API_URL) throw new Error("URL API belum dikonfigurasi.");
 
                 const response = await fetch(API_URL, {
@@ -397,3 +391,4 @@
     </script>
 </body>
 </html>
+
